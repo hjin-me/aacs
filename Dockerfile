@@ -1,11 +1,11 @@
 FROM golang:1.17 as goBuilder
 WORKDIR /go_build
-COPY _ci /go_build
+COPY . /go_build
 ARG VERSION_TAG
 ARG COMMIT_ID
 ENV VERSION_TAG ${VERSION_TAG:-0.0.0}
 ENV GOPROXY=https://goproxy.cn,direct
-RUN go build -mod=vendor -ldflags "-X main.Version=$VERSION_TAG" -o /go/bin/ ./...
+RUN go build -ldflags "-X main.Version=$VERSION_TAG" -o /go/bin/ ./...
 # debian release as the same as golang image
 # set TimeZone as Asia/Shanghai
 # set Local as zh-hans
