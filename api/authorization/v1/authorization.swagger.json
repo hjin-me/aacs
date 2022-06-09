@@ -1,0 +1,536 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "title": "api/authorization/v1/authorization.proto",
+    "version": "version not set"
+  },
+  "tags": [
+    {
+      "name": "Authorization"
+    }
+  ],
+  "consumes": [
+    "application/json"
+  ],
+  "produces": [
+    "application/json"
+  ],
+  "paths": {
+    "/auth/add-perm-for-role": {
+      "put": {
+        "operationId": "Authorization_AddPermissionForRole",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/authorizationv1ResultReply"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/v1AddPermissionForRoleReq"
+            }
+          }
+        ],
+        "tags": [
+          "Authorization"
+        ]
+      }
+    },
+    "/auth/add-perm-for-user": {
+      "put": {
+        "summary": "增",
+        "operationId": "Authorization_AddPermissionForUser",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/authorizationv1ResultReply"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/v1AddPermissionForUserReq"
+            }
+          }
+        ],
+        "tags": [
+          "Authorization"
+        ]
+      }
+    },
+    "/auth/add-role-for-user": {
+      "put": {
+        "operationId": "Authorization_AddRoleForUser",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/authorizationv1ResultReply"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/v1AddRoleForUserReq"
+            }
+          }
+        ],
+        "tags": [
+          "Authorization"
+        ]
+      }
+    },
+    "/auth/del-perm-for-role": {
+      "delete": {
+        "operationId": "Authorization_DeletePermissionForRole",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/authorizationv1ResultReply"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "role",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "obj",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "act",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          }
+        ],
+        "tags": [
+          "Authorization"
+        ]
+      }
+    },
+    "/auth/del-perm-for-user": {
+      "delete": {
+        "summary": "删",
+        "operationId": "Authorization_DeletePermissionForUser",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/authorizationv1ResultReply"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "uid",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "obj",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "act",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          }
+        ],
+        "tags": [
+          "Authorization"
+        ]
+      }
+    },
+    "/auth/del-role-for-user": {
+      "delete": {
+        "operationId": "Authorization_DeleteRoleForUser",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/authorizationv1ResultReply"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "uid",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "role",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          }
+        ],
+        "tags": [
+          "Authorization"
+        ]
+      }
+    },
+    "/auth/get-perms-for-user": {
+      "get": {
+        "operationId": "Authorization_GetPermissionsForUser",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/v1GetPermissionsForUserReply"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "uid",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          }
+        ],
+        "tags": [
+          "Authorization"
+        ]
+      }
+    },
+    "/auth/get-roles-for-user": {
+      "get": {
+        "summary": "查",
+        "operationId": "Authorization_GetRolesForUser",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/v1GetRolesForUserReply"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "uid",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          }
+        ],
+        "tags": [
+          "Authorization"
+        ]
+      }
+    },
+    "/auth/get-users-for-role": {
+      "get": {
+        "operationId": "Authorization_GetUsersForRole",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/v1GetUsersForRoleReply"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "role",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          }
+        ],
+        "tags": [
+          "Authorization"
+        ]
+      }
+    },
+    "/auth/has-role-for-user": {
+      "get": {
+        "operationId": "Authorization_HasRoleForUser",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/v1HasRoleForUserReply"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "uid",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "role",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          }
+        ],
+        "tags": [
+          "Authorization"
+        ]
+      }
+    },
+    "/auth/verify": {
+      "get": {
+        "summary": "casbin-like\n校验",
+        "operationId": "Authorization_Enforce",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/authorizationv1ResultReply"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "sub",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "obj",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "act",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          }
+        ],
+        "tags": [
+          "Authorization"
+        ]
+      }
+    }
+  },
+  "definitions": {
+    "GetPermissionsForUserReplyPerm": {
+      "type": "object",
+      "properties": {
+        "obj": {
+          "type": "string"
+        },
+        "act": {
+          "type": "string"
+        }
+      }
+    },
+    "authorizationv1ResultReply": {
+      "type": "object",
+      "properties": {
+        "result": {
+          "type": "boolean"
+        }
+      }
+    },
+    "protobufAny": {
+      "type": "object",
+      "properties": {
+        "@type": {
+          "type": "string"
+        }
+      },
+      "additionalProperties": {}
+    },
+    "rpcStatus": {
+      "type": "object",
+      "properties": {
+        "code": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "message": {
+          "type": "string"
+        },
+        "details": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/protobufAny"
+          }
+        }
+      }
+    },
+    "v1AddPermissionForRoleReq": {
+      "type": "object",
+      "properties": {
+        "role": {
+          "type": "string"
+        },
+        "obj": {
+          "type": "string"
+        },
+        "act": {
+          "type": "string"
+        }
+      }
+    },
+    "v1AddPermissionForUserReq": {
+      "type": "object",
+      "properties": {
+        "uid": {
+          "type": "string"
+        },
+        "obj": {
+          "type": "string"
+        },
+        "act": {
+          "type": "string"
+        }
+      }
+    },
+    "v1AddRoleForUserReq": {
+      "type": "object",
+      "properties": {
+        "uid": {
+          "type": "string"
+        },
+        "role": {
+          "type": "string"
+        }
+      }
+    },
+    "v1GetPermissionsForUserReply": {
+      "type": "object",
+      "properties": {
+        "perm": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/GetPermissionsForUserReplyPerm"
+          }
+        }
+      }
+    },
+    "v1GetRolesForUserReply": {
+      "type": "object",
+      "properties": {
+        "roles": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "v1GetUsersForRoleReply": {
+      "type": "object",
+      "properties": {
+        "uid": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "v1HasRoleForUserReply": {
+      "type": "object",
+      "properties": {
+        "result": {
+          "type": "boolean"
+        }
+      }
+    }
+  }
+}

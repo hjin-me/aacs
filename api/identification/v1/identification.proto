@@ -1,0 +1,63 @@
+syntax = "proto3";
+
+package identification.v1;
+
+import "google/api/annotations.proto";
+import "google/protobuf/timestamp.proto";
+import "google/protobuf/empty.proto";
+import "validate/validate.proto";
+
+option go_package = "github.com/lunzi/aacs/api/identification/v1;identv1";
+
+service Identification {
+  rpc Basic(BasicRequest) returns (AuthReply)  {
+    option (google.api.http) = {
+      post: "/ident/basic",
+      body: "*",
+    };
+  }
+  rpc VerifyToken(TokenRequest) returns (TokenInfoReply)  {
+    option (google.api.http) = {
+      post: "/ident/verify-token",
+      body: "*",
+    };
+  }
+  rpc WhoAmI(google.protobuf.Empty) returns (TokenInfoReply) {
+    option (google.api.http) = {
+      get: "/ident/who-am-i",
+    };
+  }
+  rpc StandardizeAccount(StandardizeAccountReq) returns (TokenInfoReply) {
+    option (google.api.http) = {
+      post: "/ident/standardize-account",
+      body: "*",
+    };
+  }
+}
+message BasicRequest {
+  string source = 1 [(validate.rules).string = {min_len: 1, max_len: 100}];
+  string app = 2 [(validate.rules).string = {min_len: 1, max_len: 100}];
+  string uid = 3 [(validate.rules).string = {min_len: 1, max_len: 100}];
+  string pwd = 4 [(validate.rules).string = {min_len: 1, max_len: 100}];
+}
+message AuthReply {
+  string token = 1;
+  google.protobuf.Timestamp expired_at = 2;
+  string callback_url = 3;
+}
+message TokenRequest {
+  string token = 1 [(validate.rules).string = {min_len: 1, max_len: 1000}];
+  string app = 2 [(validate.rules).string = {min_len: 1, max_len: 100}];
+}
+message TokenInfoReply {
+  string uid = 1;
+  string display_name = 2;
+  string email = 3;
+  string phone_no = 4;
+  bool retired = 5;
+  string gender = 6;
+}
+message StandardizeAccountReq {
+  string source = 1 [(validate.rules).string = {min_len: 1, max_len: 100}];
+  string id = 2 [(validate.rules).string = {min_len: 1, max_len: 100}];
+}

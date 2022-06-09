@@ -1,0 +1,18 @@
+syntax = "proto3";
+
+package apierr;
+import "errors/errors.proto";
+
+option go_package = "github.com/lunzi/aacs/api/apierr;apierr";
+
+enum ErrorReason {
+  option (errors.default_code) = 500;
+
+  WTF = 0 [(errors.code) = 500];
+  CONTENT_MISSING = 1 [(errors.code) = 400];
+  APP_INVALID = 2 [(errors.code) = 400];
+  USER_NOT_FOUND = 3 [(errors.code) = 404];
+  UNAUTHORIZED = 4 [(errors.code) = 403];
+  NOT_FOUND = 5  [(errors.code) = 404];
+  RESET_PWD_ERR = 6 [(errors.code) = 401];
+}

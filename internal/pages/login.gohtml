@@ -1,0 +1,132 @@
+{{define "head"}}
+    <title>安天认证与鉴权系统 - 登陆</title>
+    <style type="text/css">
+
+        .bg {
+            background: url("{{ .Url }}") center;
+            background-size: cover;
+            width: 80vw;
+            height: 100vh;
+            position: absolute;
+            z-index: -1;
+        }
+
+        .form {
+            min-height: 100vh;
+            background: white;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        .form > form {
+            width: 350px;
+        }
+
+        .footer {
+            position: absolute;
+            bottom: 20px;
+            left: 20px;
+            color: #fff;
+            text-shadow: #333 1px 1px 1px;
+            font-size: 14px;
+            line-height: 1;
+        }
+
+        .footer a {
+            color: #fff;
+            text-shadow: #333 1px 1px 1px;
+            font-size: 14px;
+        }
+
+        @media screen and (max-width: 575px) {
+            .bg {
+                display: none;
+            }
+
+            .footer {
+                display: none;
+            }
+
+        }
+    </style>
+{{end}}
+{{define "body"}}
+    <div class="bg"></div>
+    <div class="container-fluid">
+        <div class="row justify-content-end">
+            <div class="form col-12 col-sm-4" x-data="  {
+    isWecom: false,
+    source: 'antiy', uid: '', pwd: '', app: '{{ .App }}',
+    useLast() {
+      let last = localStorage.getItem('lastSource')
+      if (['antiy', 'local', 'mingdun'].includes(last)) {
+        this.source = last
+      } else {
+        localStorage.removeItem('lastSource')
+      }
+      if (navigator.userAgent.indexOf('wxwork') !== -1) {
+        this.isWecom = true
+      }
+    },
+    login() {
+      const options = {
+        method: 'POST',
+        body: JSON.stringify({
+          'source': this.source,
+          'app': this.app,
+          'uid': this.uid,
+          'pwd': this.pwd,
+        }),
+        headers: {
+          'Content-Type': 'application/json'
+        }
+      }
+      fetch('/ident/basic', options)
+        .then(res => res.json())
+        .then(res => {
+            console.log(res)
+            if (res.code && res.message) {
+              alert(res.message)
+              return
+            }
+            localStorage.setItem('lastSource', this.source)
+            if (res.callbackUrl) {
+              location.href = res.callbackUrl
+            }
+          }
+        ).catch(res => console.warn(res));
+    }
+  }" x-init="useLast()">
+                <form class="row g-3" id="login-form" action="/ident/basic" method="post" autocomplete="on"
+                      @submit.prevent="login()">
+                    <h4>{{ .Title }}</h4>
+                    <div class="" x-show="isWecom">
+                        <a class="btn btn-primary" href="{{ .WecomLoginUrl }}">企业微信登陆</a>
+                    </div>
+                    <div class="">
+                        <select class="form-select" aria-label="选择账号体系" name="source" x-model="source">
+                            <option value="antiy" selected>安天账号</option>
+                            <option value="mingdun">铭盾账号</option>
+                            <option value="local">本地账号</option>
+                        </select>
+                    </div>
+                    <div class="">
+                        <input type="text" class="form-control" id="uid"
+                               name="uid" tabindex="1" autocomplete="username"
+                               autofocus placeholder="用户名" x-model="uid">
+                    </div>
+                    <div class="">
+                        <input type="password" class="form-control" id="pwd"
+                               name="pwd" tabindex="2" placeholder="密码" x-model="pwd">
+                    </div>
+                    <input type="hidden" name="app" value="{{ .App }}" x-model="app">
+                    <div class="">
+                        <button type="submit" class="btn btn-primary">登陆</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    <footer class="footer"><span>{{ .Copyright }}</span>&nbsp;</footer>
+{{end}}

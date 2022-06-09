@@ -1,0 +1,144 @@
+syntax = "proto3";
+
+package authorization.v1;
+
+import "google/api/annotations.proto";
+import "validate/validate.proto";
+
+option go_package = "github.com/lunzi/aacs/api/authorization/v1;authv1";
+
+service Authorization {
+
+  // casbin-like
+  // 校验
+  rpc Enforce(EnforceReq) returns (ResultReply)  {
+    option (google.api.http) = {
+      get: "/auth/verify",
+    };
+  }
+
+  // 增
+  rpc AddPermissionForUser(AddPermissionForUserReq) returns(ResultReply) {
+    option (google.api.http) = {
+      put: "/auth/add-perm-for-user",
+      body: "*",
+    };
+  }
+  rpc AddPermissionForRole(AddPermissionForRoleReq) returns(ResultReply) {
+    option (google.api.http) = {
+      put: "/auth/add-perm-for-role",
+      body: "*",
+    };
+  }
+  rpc AddRoleForUser(AddRoleForUserReq) returns (ResultReply) {
+    option (google.api.http) = {
+      put: "/auth/add-role-for-user",
+      body: "*",
+    };
+  }
+  // 删
+  rpc DeletePermissionForUser(DeletePermissionForUserReq) returns(ResultReply){
+    option (google.api.http) = {
+      delete: "/auth/del-perm-for-user",
+    };
+  }
+  rpc DeletePermissionForRole(DeletePermissionForRoleReq) returns(ResultReply){
+    option (google.api.http) = {
+      delete: "/auth/del-perm-for-role",
+    };
+  }
+  rpc DeleteRoleForUser(DeleteRoleForUserReq) returns (ResultReply) {
+    option (google.api.http) = {
+      delete: "/auth/del-role-for-user",
+    };
+  }
+  // 改
+
+  // 查
+  rpc GetRolesForUser(GetRolesForUserReq) returns (GetRolesForUserReply) {
+    option (google.api.http) = {
+      get: "/auth/get-roles-for-user",
+    };
+  }
+  rpc GetUsersForRole(GetUsersForRoleReq) returns (GetUsersForRoleReply) {
+    option (google.api.http) = {
+      get: "/auth/get-users-for-role",
+    };
+  }
+  rpc HasRoleForUser(HasRoleForUserReq) returns (HasRoleForUserReply) {
+    option (google.api.http) = {
+      get: "/auth/has-role-for-user",
+    };
+  }
+  rpc GetPermissionsForUser(GetPermissionsForUserReq) returns (GetPermissionsForUserReply) {
+    option (google.api.http) = {
+      get: "/auth/get-perms-for-user",
+    };
+  }
+}
+
+message ResultReply {
+  bool result = 1;
+}
+message EnforceReq {
+  string sub = 2 [(validate.rules).string.min_len = 1]; // 发起请求的 uid，比如 psp:1234456
+  string obj = 3 [(validate.rules).string.min_len = 1]; // 资源 URI，比如 yun:bms:queue123
+  string act = 4 [(validate.rules).string.min_len = 1]; // 操作名称，比如 sub、publish
+}
+message GetRolesForUserReq {
+  string uid = 1 [(validate.rules).string.min_len = 1];
+}
+message GetRolesForUserReply {
+  repeated string roles = 1;
+}
+message GetUsersForRoleReq {
+  string role = 1 [(validate.rules).string.min_len = 1];
+}
+message GetUsersForRoleReply {
+  repeated string uid = 1;
+}
+message AddRoleForUserReq {
+  string uid = 1 [(validate.rules).string.min_len = 1];
+  string role = 2 [(validate.rules).string.min_len = 1];
+}
+message HasRoleForUserReq {
+  string uid = 1 [(validate.rules).string.min_len = 1];
+  string role = 2 [(validate.rules).string.min_len = 1];
+}
+message HasRoleForUserReply {
+  bool result = 1;
+}
+message AddPermissionForUserReq {
+  string uid = 1 [(validate.rules).string.min_len = 1];
+  string obj = 2 [(validate.rules).string.min_len = 1];
+  string act = 3 [(validate.rules).string.min_len = 1];
+}
+message AddPermissionForRoleReq {
+  string role = 1 [(validate.rules).string.min_len = 1];
+  string obj = 2 [(validate.rules).string.min_len = 1];
+  string act = 3 [(validate.rules).string.min_len = 1];
+}
+message GetPermissionsForUserReq {
+  string uid = 1 [(validate.rules).string.min_len = 1];
+}
+message GetPermissionsForUserReply {
+  message Perm {
+    string obj = 1;
+    string act = 2;
+  }
+  repeated Perm perm = 1;
+}
+message DeletePermissionForUserReq {
+  string uid = 1 [(validate.rules).string.min_len = 1];
+  string obj = 2 [(validate.rules).string.min_len = 1];
+  string act = 3 [(validate.rules).string.min_len = 1];
+}
+message  DeletePermissionForRoleReq {
+  string role = 1 [(validate.rules).string.min_len = 1];
+  string obj = 2 [(validate.rules).string.min_len = 1];
+  string act = 3 [(validate.rules).string.min_len = 1];
+}
+message DeleteRoleForUserReq {
+  string uid = 1 [(validate.rules).string.min_len = 1];
+  string role = 2 [(validate.rules).string.min_len = 1];
+}

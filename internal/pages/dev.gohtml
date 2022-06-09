@@ -1,0 +1,27 @@
+{{define "head"}}
+    <title>开发调试 - 认证和访问控制系统</title>
+{{end}}
+{{define "body"}}
+    {{template "nav" .}}
+    <div class="container" x-data="  {
+    u: '',
+    init() {
+      let u = localStorage.getItem('lastCallback')
+      if (u) {
+        this.u = u
+      }
+    },
+    go() {
+      localStorage.setItem('lastCallback', this.u)
+      location.href = this.u + location.search
+    }
+  }" x-init="init()">
+        <div class="row mb-3">
+            <input type="url" class="form-control"
+                   name="url" tabindex="1" placeholder="跳转去哪里" x-model="u">
+        </div>
+        <div class="row mb-3">
+            <button type="submit" class="btn btn-primary" x-on:click="go()">Go</button>
+        </div>
+    </div>
+{{end}}

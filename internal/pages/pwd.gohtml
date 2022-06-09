@@ -1,0 +1,62 @@
+{{define "head"}}
+    <title>用户管理 - 认证和访问控制系统</title>
+{{end}}
+{{define "body"}}
+    {{template "nav" .}}
+    <div class="container" x-data="  {
+    oldPwd: '', newPwd: '', verifyPwd: '',
+    resetPwd() {
+      const options = {
+        method: 'POST',
+        body: JSON.stringify({
+          oldPwd: this.oldPwd,
+          newPwd: this.newPwd,
+          verifyPwd: this.verifyPwd
+        }),
+
+        headers: {
+          'Content-Type': 'application/json'
+        }
+      }
+      fetch('/account/reset-pwd', options)
+        .then(res => res.json())
+        .then(res => {
+            console.log(res)
+            if (res.code && res.message) {
+              alert(res.message)
+              return
+            }
+            alert('修改密码成功')
+          }
+        ).catch(res => {
+          console.warn(res)
+          alert('修改密码失败');
+        }
+      );
+    }
+  }">
+        <div class="row">
+            <div class="col-sm">
+                <form class="row g-3" id="login-form" method="post" autocomplete="on"
+                      @submit.prevent="resetPwd()">
+                    <h4>{{ .Title }}</h4>
+                    <div class="row mb-3">
+                        <input type="password" class="form-control"
+                               name="oldPwd" tabindex="1" placeholder="当前使用的密码" x-model="oldPwd">
+                    </div>
+                    <div class="row mb-3">
+                        <input type="password" class="form-control"
+                               name="newPwd" tabindex="2" placeholder="新密码" x-model="newPwd">
+                    </div>
+                    <div class="row mb-3">
+                        <input type="password" class="form-control"
+                               name="verifyPwd" tabindex="2" placeholder="重复新密码" x-model="verifyPwd">
+                    </div>
+                    <div class="row mb-3">
+                        <button type="submit" class="btn btn-primary">修改</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+{{end}}

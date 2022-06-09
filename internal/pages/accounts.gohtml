@@ -1,0 +1,67 @@
+{{define "head"}}
+    <title>用户管理 - 认证和访问控制系统</title>
+{{end}}
+{{define "body"}}
+    {{template "nav" .}}
+    <div class="container" x-data="{'accounts':[],
+    color(s) {
+      let h =s.split('').reduce((l, c) => l+c.charCodeAt(0)-97, 0)*31%361
+      return 'hsl('+h+', 68.75%, 31.37%)'
+    },
+    getAccounts() {
+      const options = {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json'
+        }
+      }
+      fetch('/account/all-accounts', options)
+        .then(res => res.json())
+        .then(res => {
+            console.log(res)
+            if (res.code && res.message) {
+              alert(res.message)
+              return
+            }
+            this.accounts = res.accounts
+          }
+        ).catch(res => console.warn(res));
+    }}" x-init="getAccounts()">
+        <div class="row">
+            <div class="col-sm">
+                <table class="table">
+                    <thead>
+                    <tr>
+                        <th scope="col">#</th>
+                        <th scope="col">名称</th>
+                        <th scope="col">关联账号</th>
+                        <th scope="col">在职状态</th>
+                        <th scope="col">可以登陆的系统</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <template x-for="a in accounts">
+                        <tr>
+                            <th x-text="a.uid"></th>
+                            <td x-text="a.displayName"></td>
+                            <td>
+                                <template x-for="r in a.relatedIdents">
+                                    <div x-data="{ styles: { 'background-color': color(r.source) }}">
+                                        <span class="badge" :style="styles" x-text="r.source"></span>
+                                        <span x-text="r.id"></span>
+                                    </div>
+                                </template>
+                            </td>
+                            <td>
+                                <span x-show="!a.retired" class="badge bg-info">在职</span>
+                                <span x-show="a.retired" class="badge bg-dark">离职</span>
+                            </td>
+                            <td>TODO</td>
+                        </tr>
+                    </template>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+{{end}}

@@ -1,0 +1,83 @@
+syntax = "proto3";
+
+package account.v1;
+
+import "google/api/annotations.proto";
+import "google/protobuf/empty.proto";
+import "validate/validate.proto";
+
+option go_package = "github.com/lunzi/aacs/api/account/v1;v1";
+
+service account {
+  rpc Create(CreateReq) returns (google.protobuf.Empty)  {
+    option (google.api.http) = {
+      post: "/account/create",
+      body: "*",
+    };
+  }
+  rpc ResetPwd(ResetPwdReq) returns (google.protobuf.Empty) {
+    option (google.api.http) = {
+      post: "/account/reset-pwd",
+      body: "*",
+    };
+  }
+  rpc AllAccounts(AllAccountsReq) returns (AllAccountsReply) {
+    option (google.api.http) = {
+      get: "/account/all-accounts",
+    };
+  }
+  rpc SaveRelation(SaveRelationReq) returns (google.protobuf.Empty) {
+    option (google.api.http) = {
+      post: "/account/save-relation",
+      body: "*"
+    };
+  }
+  rpc ImportAccount(ImportAccountReq) returns (google.protobuf.Empty) {
+    option (google.api.http) = {
+      post: "/account/import-account",
+      body: "*"
+    };
+  }
+}
+
+message CreateReq {
+  string id = 1 [(validate.rules).string.min_len = 1];
+  string display_name = 2 [(validate.rules).string.min_len = 1];
+  string email = 3 [(validate.rules).string.email = true];
+  string phone_no = 4 [(validate.rules).string.min_len = 1];
+  string pwd = 5 [(validate.rules).string.min_len = 1];
+}
+
+message ResetPwdReq {
+  string old_pwd = 1 [(validate.rules).string.min_len = 1];
+  string new_pwd = 2 [(validate.rules).string.min_len = 1];
+  string verify_pwd = 3 [(validate.rules).string.min_len = 1];
+}
+message AllAccountsReq {
+
+}
+message Account {
+  message Ident {
+    string source = 1;
+    string id = 2;
+  }
+  string uid = 1;
+  string display_name = 2;
+  string email = 3;
+  string phone_no = 4;
+  bool retired = 5;
+  repeated string allowed_apps = 6;
+  repeated Ident related_idents = 7;
+}
+message AllAccountsReply {
+  repeated Account accounts = 1;
+}
+message SaveRelationReq {
+  string uid = 1 [(validate.rules).string.min_len = 1];
+  string ident_source = 2 [(validate.rules).string.min_len = 1];
+  string ident_id = 3 [(validate.rules).string.min_len = 1];
+}
+message ImportAccountReq {
+  string source = 1 [(validate.rules).string.min_len = 1];
+  string uid = 2 [(validate.rules).string.min_len = 1];
+}

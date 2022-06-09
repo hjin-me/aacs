@@ -1,0 +1,268 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "title": "api/openidprovider/v1/openidprovider.proto",
+    "version": "version not set"
+  },
+  "tags": [
+    {
+      "name": "OpenIDProvider"
+    }
+  ],
+  "consumes": [
+    "application/json"
+  ],
+  "produces": [
+    "application/json"
+  ],
+  "paths": {
+    "/openidprovider/basic-auth": {
+      "post": {
+        "operationId": "OpenIDProvider_BasicAuth",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/v1BasicAuthReply"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/v1BasicAuthReq"
+            }
+          }
+        ],
+        "tags": [
+          "OpenIDProvider"
+        ]
+      }
+    },
+    "/openidprovider/name": {
+      "post": {
+        "operationId": "OpenIDProvider_Name",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/v1NameReply"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "properties": {}
+            }
+          }
+        ],
+        "tags": [
+          "OpenIDProvider"
+        ]
+      }
+    },
+    "/openidprovider/search-uid": {
+      "post": {
+        "operationId": "OpenIDProvider_SearchUid",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/v1SearchUidReply"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/v1SearchUidReq"
+            }
+          }
+        ],
+        "tags": [
+          "OpenIDProvider"
+        ]
+      }
+    },
+    "/openidprovider/token-auth": {
+      "post": {
+        "operationId": "OpenIDProvider_TokenAuth",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/v1TokenAuthReply"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/v1TokenAuthReq"
+            }
+          }
+        ],
+        "tags": [
+          "OpenIDProvider"
+        ]
+      }
+    }
+  },
+  "definitions": {
+    "protobufAny": {
+      "type": "object",
+      "properties": {
+        "@type": {
+          "type": "string"
+        }
+      },
+      "additionalProperties": {}
+    },
+    "rpcStatus": {
+      "type": "object",
+      "properties": {
+        "code": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "message": {
+          "type": "string"
+        },
+        "details": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/protobufAny"
+          }
+        }
+      }
+    },
+    "v1BasicAuthReply": {
+      "type": "object",
+      "properties": {
+        "sub": {
+          "$ref": "#/definitions/v1Subject"
+        }
+      }
+    },
+    "v1BasicAuthReq": {
+      "type": "object",
+      "properties": {
+        "uid": {
+          "type": "string"
+        },
+        "pwd": {
+          "type": "string"
+        }
+      }
+    },
+    "v1NameReply": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string"
+        }
+      }
+    },
+    "v1SearchUidReply": {
+      "type": "object",
+      "properties": {
+        "sub": {
+          "$ref": "#/definitions/v1Subject"
+        }
+      }
+    },
+    "v1SearchUidReq": {
+      "type": "object",
+      "properties": {
+        "uid": {
+          "type": "string"
+        }
+      }
+    },
+    "v1Subject": {
+      "type": "object",
+      "properties": {
+        "uid": {
+          "type": "string"
+        },
+        "displayName": {
+          "type": "string"
+        },
+        "email": {
+          "type": "string"
+        },
+        "phoneNo": {
+          "type": "string"
+        },
+        "source": {
+          "type": "string"
+        },
+        "app": {
+          "type": "string"
+        },
+        "retired": {
+          "type": "boolean"
+        },
+        "gender": {
+          "type": "string"
+        }
+      }
+    },
+    "v1TokenAuthReply": {
+      "type": "object",
+      "properties": {
+        "sub": {
+          "$ref": "#/definitions/v1Subject"
+        },
+        "uid": {
+          "type": "string"
+        }
+      }
+    },
+    "v1TokenAuthReq": {
+      "type": "object",
+      "properties": {
+        "token": {
+          "type": "string"
+        }
+      }
+    }
+  }
+}

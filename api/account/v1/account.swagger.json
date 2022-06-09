@@ -1,0 +1,312 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "title": "api/account/v1/account.proto",
+    "version": "version not set"
+  },
+  "tags": [
+    {
+      "name": "account"
+    }
+  ],
+  "consumes": [
+    "application/json"
+  ],
+  "produces": [
+    "application/json"
+  ],
+  "paths": {
+    "/account/all-accounts": {
+      "get": {
+        "operationId": "account_AllAccounts",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/v1AllAccountsReply"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "tags": [
+          "account"
+        ]
+      }
+    },
+    "/account/create": {
+      "post": {
+        "operationId": "account_Create",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "properties": {}
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/v1CreateReq"
+            }
+          }
+        ],
+        "tags": [
+          "account"
+        ]
+      }
+    },
+    "/account/import-account": {
+      "post": {
+        "operationId": "account_ImportAccount",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "properties": {}
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/v1ImportAccountReq"
+            }
+          }
+        ],
+        "tags": [
+          "account"
+        ]
+      }
+    },
+    "/account/reset-pwd": {
+      "post": {
+        "operationId": "account_ResetPwd",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "properties": {}
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/v1ResetPwdReq"
+            }
+          }
+        ],
+        "tags": [
+          "account"
+        ]
+      }
+    },
+    "/account/save-relation": {
+      "post": {
+        "operationId": "account_SaveRelation",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "properties": {}
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/v1SaveRelationReq"
+            }
+          }
+        ],
+        "tags": [
+          "account"
+        ]
+      }
+    }
+  },
+  "definitions": {
+    "AccountIdent": {
+      "type": "object",
+      "properties": {
+        "source": {
+          "type": "string"
+        },
+        "id": {
+          "type": "string"
+        }
+      }
+    },
+    "protobufAny": {
+      "type": "object",
+      "properties": {
+        "@type": {
+          "type": "string"
+        }
+      },
+      "additionalProperties": {}
+    },
+    "rpcStatus": {
+      "type": "object",
+      "properties": {
+        "code": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "message": {
+          "type": "string"
+        },
+        "details": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/protobufAny"
+          }
+        }
+      }
+    },
+    "v1Account": {
+      "type": "object",
+      "properties": {
+        "uid": {
+          "type": "string"
+        },
+        "displayName": {
+          "type": "string"
+        },
+        "email": {
+          "type": "string"
+        },
+        "phoneNo": {
+          "type": "string"
+        },
+        "retired": {
+          "type": "boolean"
+        },
+        "allowedApps": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "relatedIdents": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/AccountIdent"
+          }
+        }
+      }
+    },
+    "v1AllAccountsReply": {
+      "type": "object",
+      "properties": {
+        "accounts": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/v1Account"
+          }
+        }
+      }
+    },
+    "v1CreateReq": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string"
+        },
+        "displayName": {
+          "type": "string"
+        },
+        "email": {
+          "type": "string"
+        },
+        "phoneNo": {
+          "type": "string"
+        },
+        "pwd": {
+          "type": "string"
+        }
+      }
+    },
+    "v1ImportAccountReq": {
+      "type": "object",
+      "properties": {
+        "source": {
+          "type": "string"
+        },
+        "uid": {
+          "type": "string"
+        }
+      }
+    },
+    "v1ResetPwdReq": {
+      "type": "object",
+      "properties": {
+        "oldPwd": {
+          "type": "string"
+        },
+        "newPwd": {
+          "type": "string"
+        },
+        "verifyPwd": {
+          "type": "string"
+        }
+      }
+    },
+    "v1SaveRelationReq": {
+      "type": "object",
+      "properties": {
+        "uid": {
+          "type": "string"
+        },
+        "identSource": {
+          "type": "string"
+        },
+        "identId": {
+          "type": "string"
+        }
+      }
+    }
+  }
+}

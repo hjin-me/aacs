@@ -1,0 +1,56 @@
+{{define "base"}}
+    <!DOCTYPE html>
+    <html lang="zh-Hans">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+        <link media="all" href="/statics/thirdparty/css/bootstrap.css" rel="stylesheet">
+        <script src="/statics/thirdparty/js/bootstrap.bundle.min.js"></script>
+        <script src="/statics/thirdparty/js/alpinejs.min.js" defer></script>
+        {{template "head" .}}
+    </head>
+    <body>
+    {{template "body" .}}
+    </body>
+    </html>
+{{end}}
+{{define "nav"}}
+    <nav class="navbar navbar-expand-lg navbar-light bg-light" x-data="  {
+    session: {},
+    getSession() {
+      fetch('/ident/who-am-i').then(res => res.json()).then(res => this.session = res)
+    }
+  }" x-init="getSession()">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="#">认证和访问控制系统</a>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                    <li class="nav-item">
+                        <a class="nav-link" href="/m/thirdparty">接入应用管理</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/m/accounts">账号管理</a>
+                    </li>
+                    <li class="nav-item" x-show="session.uid">
+                        <a class="nav-link" href="/?app=aacs">登陆测试</a>
+                    </li>
+                    <li class="nav-item" x-show="!session.uid">
+                        <a class="nav-link" href="/?app=aacs">登陆</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" target="_blank" href="/q/swagger-ui">swagger</a>
+                    </li>
+                </ul>
+                <span class="navbar-text" x-text="session.uid"></span>
+                <ul class="navbar-nav mb-2 mb-lg-0">
+                    <li class="nav-item" x-show="session.uid">
+                        <a class="nav-link" href="/my/pwd">修改密码</a>
+                    </li>
+                    <li class="nav-item" x-show="session.uid">
+                        <a href="/logout" class="nav-link" x-show="session.uid">登出</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+{{end}}

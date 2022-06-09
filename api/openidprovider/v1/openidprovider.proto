@@ -1,0 +1,69 @@
+syntax = "proto3";
+
+package openidprovider.v1;
+
+import "google/api/annotations.proto";
+import "google/protobuf/empty.proto";
+import "validate/validate.proto";
+
+option go_package = "github.com/lunzi/aacs/api/openidprovider/v1;openidproviderv1";
+
+service OpenIDProvider {
+  rpc Name(google.protobuf.Empty) returns (NameReply)  {
+    option (google.api.http) = {
+      post: "/openidprovider/name",
+      body: "*",
+    };
+  }
+  rpc BasicAuth(BasicAuthReq) returns (BasicAuthReply) {
+    option (google.api.http) = {
+      post: "/openidprovider/basic-auth",
+      body: "*",
+    };
+  }
+  rpc TokenAuth(TokenAuthReq) returns (TokenAuthReply) {
+    option (google.api.http) = {
+      post: "/openidprovider/token-auth",
+      body: "*",
+    };
+  }
+  rpc SearchUid(SearchUidReq) returns (SearchUidReply) {
+    option (google.api.http) = {
+      post: "/openidprovider/search-uid",
+      body: "*",
+    };
+  }
+}
+message Subject {
+  string uid = 1;
+  string display_name = 2;
+  string email = 3;
+  string phone_no = 4;
+  string source = 5;
+  string app = 6;
+  bool retired = 7;
+  string gender = 8;
+}
+message NameReply {
+  string name = 1;
+}
+message BasicAuthReq {
+  string uid = 1 [(validate.rules).string = {min_len: 1, max_len: 100}];
+  string pwd = 2 [(validate.rules).string = {min_len: 1, max_len: 100}];
+}
+message BasicAuthReply {
+  Subject sub = 1;
+}
+message TokenAuthReq {
+  string token = 1 [(validate.rules).string = {min_len: 1, max_len: 1000}];
+}
+message TokenAuthReply {
+  Subject sub = 1;
+  string uid = 2;
+}
+message SearchUidReq {
+  string uid = 1 [(validate.rules).string = {min_len: 1, max_len: 100}];
+}
+message SearchUidReply {
+  Subject sub = 1;
+}

@@ -1,0 +1,79 @@
+{{define "head"}}
+    <title>认证与访问控制系统 - 应用管理</title>
+{{end}}
+{{define "body"}}
+    {{template "nav" .}}
+    <div class="container">
+        <table class="table">
+            <thead>
+            <tr>
+                <th scope="col">#</th>
+                <th scope="col">名称</th>
+                <th scope="col">自动登录</th>
+                <th scope="col">回调地址</th>
+                <th scope="col">默认token有效期</th>
+                <th scope="col">开发模式</th>
+                <th scope="col">密钥</th>
+            </tr>
+            </thead>
+            <tbody id="app-list">
+            </tbody>
+        </table>
+        <footer class="footer"><span>{{ .Copyright }}</span></footer>
+    </div>
+    <script>
+      (() => {
+
+        const options = {
+          method: 'POST',
+          body: JSON.stringify({}),
+          headers: {
+            'Content-Type': 'application/json'
+          }
+        }
+        fetch('/thirdparty/all', options)
+          .then(res => res.json())
+          .then(res => {
+              console.log(res)
+              document.querySelector("#app-list").innerHTML = res.data.map(v => {
+                return '<tr><th scope="row">' + v.id + '</th>' +
+                  '<td>' + v.name + '</td>' +
+                  '<td>' + v.autoLogin + '</td>' +
+                  '<td>' + v.callbackUrl + '</td>' +
+                  '<td>' + v.keyValidityPeriod + '</td>' +
+                  '<td>' + v.devMode + '</td>' +
+                  '<td><button type="button" class="secret" data-id="' + v.id + '">查看密钥</button> </td></tr>'
+              }).join('')
+            }
+          ).catch(res => console.warn(res));
+
+        document.querySelector("#app-list").addEventListener("click", ev => {
+          let className = ev.target?.getAttribute("class") || ""
+          if (className.indexOf("secret") === -1) {
+            return
+          }
+          let el = ev.target
+          console.log(el, el.dataset.id)
+          const options = {
+            method: 'POST',
+            body: JSON.stringify({
+              id: el.dataset.id
+            }),
+            headers: {
+              'Content-Type': 'application/json'
+            }
+          }
+          fetch('/thirdparty/inspect', options)
+            .then(res => res.json())
+            .then(res => {
+                console.log(res)
+                if (res.id) {
+                  el.innerHTML = "<code>" + res.secret + "</code>"
+                }
+              }
+            ).catch(res => console.warn(res));
+        })
+      })()
+
+    </script>
+{{end}}

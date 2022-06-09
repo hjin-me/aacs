@@ -1,0 +1,16 @@
+{{define "head"}}
+    <title>认证和访问控制系统</title>
+{{end}}
+{{define "body"}}
+    {{template "nav" .}}
+    <div class="container">
+        <div class="row">
+            <div class="col-sm">
+                <h3>当前 token</h3>
+                <pre><code id="token">{{ .Token }}</code></pre>
+                <h3>当前 用户</h3>
+                <pre><code id="uid">{{ .Uid }}</code></pre>
+            </div>
+        </div>
+    </div>
+{{end}}

@@ -1,0 +1,329 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "title": "api/thirdparty/v1/thirdparty.proto",
+    "version": "version not set"
+  },
+  "tags": [
+    {
+      "name": "ThirdParty"
+    }
+  ],
+  "consumes": [
+    "application/json"
+  ],
+  "produces": [
+    "application/json"
+  ],
+  "paths": {
+    "/thirdparty/add": {
+      "post": {
+        "operationId": "ThirdParty_Add",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/v1AddReply"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/v1AddRequest"
+            }
+          }
+        ],
+        "tags": [
+          "ThirdParty"
+        ]
+      }
+    },
+    "/thirdparty/all": {
+      "post": {
+        "operationId": "ThirdParty_All",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/v1AllReply"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/v1AllRequest"
+            }
+          }
+        ],
+        "tags": [
+          "ThirdParty"
+        ]
+      }
+    },
+    "/thirdparty/bind-admin": {
+      "post": {
+        "operationId": "ThirdParty_BindAdmin",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/thirdpartyv1ResultReply"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/v1BindAdminRequest"
+            }
+          }
+        ],
+        "tags": [
+          "ThirdParty"
+        ]
+      }
+    },
+    "/thirdparty/grant-token": {
+      "post": {
+        "operationId": "ThirdParty_GrantToken",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/v1GrantTokenReply"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/v1GrantTokenReq"
+            }
+          }
+        ],
+        "tags": [
+          "ThirdParty"
+        ]
+      }
+    },
+    "/thirdparty/inspect": {
+      "post": {
+        "operationId": "ThirdParty_Inspect",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/v1Info"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/v1InfoRequest"
+            }
+          }
+        ],
+        "tags": [
+          "ThirdParty"
+        ]
+      }
+    }
+  },
+  "definitions": {
+    "protobufAny": {
+      "type": "object",
+      "properties": {
+        "@type": {
+          "type": "string"
+        }
+      },
+      "additionalProperties": {}
+    },
+    "rpcStatus": {
+      "type": "object",
+      "properties": {
+        "code": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "message": {
+          "type": "string"
+        },
+        "details": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/protobufAny"
+          }
+        }
+      }
+    },
+    "thirdpartyv1ResultReply": {
+      "type": "object",
+      "properties": {
+        "result": {
+          "type": "boolean"
+        }
+      }
+    },
+    "v1AddReply": {
+      "type": "object",
+      "properties": {
+        "info": {
+          "$ref": "#/definitions/v1Info"
+        }
+      }
+    },
+    "v1AddRequest": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string"
+        },
+        "name": {
+          "type": "string"
+        },
+        "owner": {
+          "type": "string"
+        },
+        "callbackUrl": {
+          "type": "string"
+        },
+        "autoLogin": {
+          "type": "boolean"
+        }
+      }
+    },
+    "v1AllReply": {
+      "type": "object",
+      "properties": {
+        "data": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/v1Info"
+          }
+        }
+      }
+    },
+    "v1AllRequest": {
+      "type": "object"
+    },
+    "v1BindAdminRequest": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string"
+        },
+        "uid": {
+          "type": "string"
+        }
+      }
+    },
+    "v1GrantTokenReply": {
+      "type": "object",
+      "properties": {
+        "token": {
+          "type": "string"
+        },
+        "expiredAt": {
+          "type": "string",
+          "format": "date-time"
+        }
+      }
+    },
+    "v1GrantTokenReq": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string"
+        },
+        "periodOfValidity": {
+          "type": "integer",
+          "format": "int32"
+        }
+      }
+    },
+    "v1Info": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string"
+        },
+        "name": {
+          "type": "string"
+        },
+        "callbackUrl": {
+          "type": "string"
+        },
+        "keyValidityPeriod": {
+          "type": "string",
+          "format": "uint64"
+        },
+        "autoLogin": {
+          "type": "boolean"
+        },
+        "secret": {
+          "type": "string"
+        },
+        "devMode": {
+          "type": "boolean"
+        }
+      }
+    },
+    "v1InfoRequest": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string"
+        }
+      }
+    }
+  }
+}

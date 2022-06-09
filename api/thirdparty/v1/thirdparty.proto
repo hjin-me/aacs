@@ -1,0 +1,89 @@
+syntax = "proto3";
+
+package thirdparty.v1;
+
+import "google/api/annotations.proto";
+import "google/protobuf/timestamp.proto";
+import "validate/validate.proto";
+
+option go_package = "github.com/lunzi/aacs/api/thirdparty/v1;thirdpartyv1";
+
+service ThirdParty {
+  rpc Add(AddRequest) returns (AddReply)  {
+    option (google.api.http) = {
+      post: "/thirdparty/add",
+      body: "*",
+    };
+  }
+  rpc Inspect(InfoRequest) returns (Info) {
+    option (google.api.http) = {
+      post: "/thirdparty/inspect",
+      body: "*",
+    };
+  }
+  rpc BindAdmin(BindAdminRequest) returns (ResultReply) {
+    option (google.api.http) = {
+      post: "/thirdparty/bind-admin",
+      body: "*",
+    };
+  }
+  rpc All(AllRequest) returns (AllReply) {
+    option (google.api.http) = {
+      post: "/thirdparty/all",
+      body: "*",
+    };
+  }
+  rpc GrantToken(GrantTokenReq) returns (GrantTokenReply) {
+    option (google.api.http) = {
+      post: "/thirdparty/grant-token",
+      body: "*",
+    };
+  }
+}
+message Info {
+  string id = 1;
+  string name = 2;
+  string callback_url = 3;
+  uint64 key_validity_period = 4;
+  bool auto_login = 5;
+  string secret = 6;
+  bool dev_mode = 7;
+}
+
+message AddRequest {
+  string id = 1 [(validate.rules).string = {min_len: 1, max_len: 100}];
+  string name = 2 [(validate.rules).string = {min_len: 1, max_len: 100}];
+  string owner = 3 [(validate.rules).string = {min_len: 1, max_len: 50}];
+  string callback_url = 4 [(validate.rules).string = {min_len: 1, max_len: 200}];
+  bool auto_login = 5;
+}
+message AddReply {
+  Info info = 1;
+}
+message BindAdminRequest {
+  string id = 1 [(validate.rules).string = {min_len: 1, max_len: 100}];
+  string uid = 2 [(validate.rules).string = {min_len: 1, max_len: 50}];
+}
+message AllRequest {
+}
+message AllReply {
+  repeated Info data = 1;
+}
+
+message InfoRequest {
+  string id = 1;
+}
+message ResultReply {
+  bool result = 1;
+}
+message ServiceTokenReply {
+  string token = 1;
+}
+message GrantTokenReq {
+  string id = 1 [(validate.rules).string = {min_len: 1, max_len: 100}];
+  int32 period_of_validity = 2 [(validate.rules).int32 = {gt:30,lt:31536000}];
+}
+message GrantTokenReply{
+  string token = 1;
+  google.protobuf.Timestamp expired_at = 2;
+}

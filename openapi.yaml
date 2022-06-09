@@ -1,0 +1,1058 @@
+# Generated with protoc-gen-openapi
+# https://github.com/google/gnostic/tree/master/cmd/protoc-gen-openapi
+
+openapi: 3.0.3
+info:
+    title: ""
+    version: 0.0.1
+paths:
+    /account/all-accounts:
+        get:
+            tags:
+                - Account
+            operationId: Account_AllAccounts
+            responses:
+                "200":
+                    description: OK
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/AllAccountsReply'
+                default:
+                    description: Default error response
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/Status'
+    /account/create:
+        post:
+            tags:
+                - Account
+            operationId: Account_Create
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            $ref: '#/components/schemas/CreateReq'
+                required: true
+            responses:
+                "200":
+                    description: OK
+                    content: {}
+                default:
+                    description: Default error response
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/Status'
+    /account/import-account:
+        post:
+            tags:
+                - Account
+            operationId: Account_ImportAccount
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            $ref: '#/components/schemas/ImportAccountReq'
+                required: true
+            responses:
+                "200":
+                    description: OK
+                    content: {}
+                default:
+                    description: Default error response
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/Status'
+    /account/reset-pwd:
+        post:
+            tags:
+                - Account
+            operationId: Account_ResetPwd
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            $ref: '#/components/schemas/ResetPwdReq'
+                required: true
+            responses:
+                "200":
+                    description: OK
+                    content: {}
+                default:
+                    description: Default error response
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/Status'
+    /account/save-relation:
+        post:
+            tags:
+                - Account
+            operationId: Account_SaveRelation
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            $ref: '#/components/schemas/SaveRelationReq'
+                required: true
+            responses:
+                "200":
+                    description: OK
+                    content: {}
+                default:
+                    description: Default error response
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/Status'
+    /auth/add-perm-for-role:
+        put:
+            tags:
+                - Authorization
+            operationId: Authorization_AddPermissionForRole
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            $ref: '#/components/schemas/AddPermissionForRoleReq'
+                required: true
+            responses:
+                "200":
+                    description: OK
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/ResultReply'
+                default:
+                    description: Default error response
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/Status'
+    /auth/add-perm-for-user:
+        put:
+            tags:
+                - Authorization
+            description: 增
+            operationId: Authorization_AddPermissionForUser
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            $ref: '#/components/schemas/AddPermissionForUserReq'
+                required: true
+            responses:
+                "200":
+                    description: OK
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/ResultReply'
+                default:
+                    description: Default error response
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/Status'
+    /auth/add-role-for-user:
+        put:
+            tags:
+                - Authorization
+            operationId: Authorization_AddRoleForUser
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            $ref: '#/components/schemas/AddRoleForUserReq'
+                required: true
+            responses:
+                "200":
+                    description: OK
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/ResultReply'
+                default:
+                    description: Default error response
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/Status'
+    /auth/del-perm-for-role:
+        delete:
+            tags:
+                - Authorization
+            operationId: Authorization_DeletePermissionForRole
+            parameters:
+                - name: role
+                  in: query
+                  schema:
+                    type: string
+                - name: obj
+                  in: query
+                  schema:
+                    type: string
+                - name: act
+                  in: query
+                  schema:
+                    type: string
+            responses:
+                "200":
+                    description: OK
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/ResultReply'
+                default:
+                    description: Default error response
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/Status'
+    /auth/del-perm-for-user:
+        delete:
+            tags:
+                - Authorization
+            description: 删
+            operationId: Authorization_DeletePermissionForUser
+            parameters:
+                - name: uid
+                  in: query
+                  schema:
+                    type: string
+                - name: obj
+                  in: query
+                  schema:
+                    type: string
+                - name: act
+                  in: query
+                  schema:
+                    type: string
+            responses:
+                "200":
+                    description: OK
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/ResultReply'
+                default:
+                    description: Default error response
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/Status'
+    /auth/del-role-for-user:
+        delete:
+            tags:
+                - Authorization
+            operationId: Authorization_DeleteRoleForUser
+            parameters:
+                - name: uid
+                  in: query
+                  schema:
+                    type: string
+                - name: role
+                  in: query
+                  schema:
+                    type: string
+            responses:
+                "200":
+                    description: OK
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/ResultReply'
+                default:
+                    description: Default error response
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/Status'
+    /auth/get-perms-for-user:
+        get:
+            tags:
+                - Authorization
+            operationId: Authorization_GetPermissionsForUser
+            parameters:
+                - name: uid
+                  in: query
+                  schema:
+                    type: string
+            responses:
+                "200":
+                    description: OK
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/GetPermissionsForUserReply'
+                default:
+                    description: Default error response
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/Status'
+    /auth/get-roles-for-user:
+        get:
+            tags:
+                - Authorization
+            description: 查
+            operationId: Authorization_GetRolesForUser
+            parameters:
+                - name: uid
+                  in: query
+                  schema:
+                    type: string
+            responses:
+                "200":
+                    description: OK
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/GetRolesForUserReply'
+                default:
+                    description: Default error response
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/Status'
+    /auth/get-users-for-role:
+        get:
+            tags:
+                - Authorization
+            operationId: Authorization_GetUsersForRole
+            parameters:
+                - name: role
+                  in: query
+                  schema:
+                    type: string
+            responses:
+                "200":
+                    description: OK
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/GetUsersForRoleReply'
+                default:
+                    description: Default error response
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/Status'
+    /auth/has-role-for-user:
+        get:
+            tags:
+                - Authorization
+            operationId: Authorization_HasRoleForUser
+            parameters:
+                - name: uid
+                  in: query
+                  schema:
+                    type: string
+                - name: role
+                  in: query
+                  schema:
+                    type: string
+            responses:
+                "200":
+                    description: OK
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/HasRoleForUserReply'
+                default:
+                    description: Default error response
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/Status'
+    /auth/verify:
+        get:
+            tags:
+                - Authorization
+            description: |-
+                casbin-like
+                 校验
+            operationId: Authorization_Enforce
+            parameters:
+                - name: sub
+                  in: query
+                  schema:
+                    type: string
+                - name: obj
+                  in: query
+                  schema:
+                    type: string
+                - name: act
+                  in: query
+                  schema:
+                    type: string
+            responses:
+                "200":
+                    description: OK
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/ResultReply'
+                default:
+                    description: Default error response
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/Status'
+    /ident/basic:
+        post:
+            tags:
+                - Identification
+            operationId: Identification_Basic
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            $ref: '#/components/schemas/BasicRequest'
+                required: true
+            responses:
+                "200":
+                    description: OK
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/AuthReply'
+                default:
+                    description: Default error response
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/Status'
+    /ident/standardize-account:
+        post:
+            tags:
+                - Identification
+            operationId: Identification_StandardizeAccount
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            $ref: '#/components/schemas/StandardizeAccountReq'
+                required: true
+            responses:
+                "200":
+                    description: OK
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/TokenInfoReply'
+                default:
+                    description: Default error response
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/Status'
+    /ident/verify-token:
+        post:
+            tags:
+                - Identification
+            operationId: Identification_VerifyToken
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            $ref: '#/components/schemas/TokenRequest'
+                required: true
+            responses:
+                "200":
+                    description: OK
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/TokenInfoReply'
+                default:
+                    description: Default error response
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/Status'
+    /ident/who-am-i:
+        get:
+            tags:
+                - Identification
+            operationId: Identification_WhoAmI
+            responses:
+                "200":
+                    description: OK
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/TokenInfoReply'
+                default:
+                    description: Default error response
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/Status'
+    /openidprovider/basic-auth:
+        post:
+            tags:
+                - OpenIDProvider
+            operationId: OpenIDProvider_BasicAuth
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            $ref: '#/components/schemas/BasicAuthReq'
+                required: true
+            responses:
+                "200":
+                    description: OK
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/BasicAuthReply'
+                default:
+                    description: Default error response
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/Status'
+    /openidprovider/name:
+        post:
+            tags:
+                - OpenIDProvider
+            operationId: OpenIDProvider_Name
+            requestBody:
+                content:
+                    application/json: {}
+                required: true
+            responses:
+                "200":
+                    description: OK
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/NameReply'
+                default:
+                    description: Default error response
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/Status'
+    /openidprovider/search-uid:
+        post:
+            tags:
+                - OpenIDProvider
+            operationId: OpenIDProvider_SearchUid
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            $ref: '#/components/schemas/SearchUidReq'
+                required: true
+            responses:
+                "200":
+                    description: OK
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/SearchUidReply'
+                default:
+                    description: Default error response
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/Status'
+    /openidprovider/token-auth:
+        post:
+            tags:
+                - OpenIDProvider
+            operationId: OpenIDProvider_TokenAuth
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            $ref: '#/components/schemas/TokenAuthReq'
+                required: true
+            responses:
+                "200":
+                    description: OK
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/TokenAuthReply'
+                default:
+                    description: Default error response
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/Status'
+    /thirdparty/add:
+        post:
+            tags:
+                - ThirdParty
+            operationId: ThirdParty_Add
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            $ref: '#/components/schemas/AddRequest'
+                required: true
+            responses:
+                "200":
+                    description: OK
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/AddReply'
+                default:
+                    description: Default error response
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/Status'
+    /thirdparty/all:
+        post:
+            tags:
+                - ThirdParty
+            operationId: ThirdParty_All
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            $ref: '#/components/schemas/AllRequest'
+                required: true
+            responses:
+                "200":
+                    description: OK
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/AllReply'
+                default:
+                    description: Default error response
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/Status'
+    /thirdparty/bind-admin:
+        post:
+            tags:
+                - ThirdParty
+            operationId: ThirdParty_BindAdmin
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            $ref: '#/components/schemas/BindAdminRequest'
+                required: true
+            responses:
+                "200":
+                    description: OK
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/ResultReply'
+                default:
+                    description: Default error response
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/Status'
+    /thirdparty/grant-token:
+        post:
+            tags:
+                - ThirdParty
+            operationId: ThirdParty_GrantToken
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            $ref: '#/components/schemas/GrantTokenReq'
+                required: true
+            responses:
+                "200":
+                    description: OK
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/GrantTokenReply'
+                default:
+                    description: Default error response
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/Status'
+    /thirdparty/inspect:
+        post:
+            tags:
+                - ThirdParty
+            operationId: ThirdParty_Inspect
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            $ref: '#/components/schemas/InfoRequest'
+                required: true
+            responses:
+                "200":
+                    description: OK
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/Info'
+                default:
+                    description: Default error response
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/Status'
+components:
+    schemas:
+        Account:
+            type: object
+            properties:
+                uid:
+                    type: string
+                displayName:
+                    type: string
+                email:
+                    type: string
+                phoneNo:
+                    type: string
+                retired:
+                    type: boolean
+                allowedApps:
+                    type: array
+                    items:
+                        type: string
+                relatedIdents:
+                    type: array
+                    items:
+                        $ref: '#/components/schemas/Account_Ident'
+        Account_Ident:
+            type: object
+            properties:
+                source:
+                    type: string
+                id:
+                    type: string
+        AddPermissionForRoleReq:
+            type: object
+            properties:
+                role:
+                    type: string
+                obj:
+                    type: string
+                act:
+                    type: string
+        AddPermissionForUserReq:
+            type: object
+            properties:
+                uid:
+                    type: string
+                obj:
+                    type: string
+                act:
+                    type: string
+        AddReply:
+            type: object
+            properties:
+                info:
+                    $ref: '#/components/schemas/Info'
+        AddRequest:
+            type: object
+            properties:
+                id:
+                    type: string
+                name:
+                    type: string
+                owner:
+                    type: string
+                callbackUrl:
+                    type: string
+                autoLogin:
+                    type: boolean
+        AddRoleForUserReq:
+            type: object
+            properties:
+                uid:
+                    type: string
+                role:
+                    type: string
+        AllAccountsReply:
+            type: object
+            properties:
+                accounts:
+                    type: array
+                    items:
+                        $ref: '#/components/schemas/Account'
+        AllReply:
+            type: object
+            properties:
+                data:
+                    type: array
+                    items:
+                        $ref: '#/components/schemas/Info'
+        AllRequest:
+            type: object
+            properties: {}
+        AuthReply:
+            type: object
+            properties:
+                token:
+                    type: string
+                expiredAt:
+                    type: string
+                    format: date-time
+                callbackUrl:
+                    type: string
+        BasicAuthReply:
+            type: object
+            properties:
+                sub:
+                    $ref: '#/components/schemas/Subject'
+        BasicAuthReq:
+            type: object
+            properties:
+                uid:
+                    type: string
+                pwd:
+                    type: string
+        BasicRequest:
+            type: object
+            properties:
+                source:
+                    type: string
+                app:
+                    type: string
+                uid:
+                    type: string
+                pwd:
+                    type: string
+        BindAdminRequest:
+            type: object
+            properties:
+                id:
+                    type: string
+                uid:
+                    type: string
+        CreateReq:
+            type: object
+            properties:
+                id:
+                    type: string
+                displayName:
+                    type: string
+                email:
+                    type: string
+                phoneNo:
+                    type: string
+                pwd:
+                    type: string
+        GetPermissionsForUserReply:
+            type: object
+            properties:
+                perm:
+                    type: array
+                    items:
+                        $ref: '#/components/schemas/GetPermissionsForUserReply_Perm'
+        GetPermissionsForUserReply_Perm:
+            type: object
+            properties:
+                obj:
+                    type: string
+                act:
+                    type: string
+        GetRolesForUserReply:
+            type: object
+            properties:
+                roles:
+                    type: array
+                    items:
+                        type: string
+        GetUsersForRoleReply:
+            type: object
+            properties:
+                uid:
+                    type: array
+                    items:
+                        type: string
+        GoogleProtobufAny:
+            type: object
+            properties:
+                '@type':
+                    type: string
+                    description: The type of the serialized message.
+            additionalProperties: true
+            description: Contains an arbitrary serialized message along with a @type that describes the type of the serialized message.
+        GrantTokenReply:
+            type: object
+            properties:
+                token:
+                    type: string
+                expiredAt:
+                    type: string
+                    format: date-time
+        GrantTokenReq:
+            type: object
+            properties:
+                id:
+                    type: string
+                periodOfValidity:
+                    type: integer
+                    format: int32
+        HasRoleForUserReply:
+            type: object
+            properties:
+                result:
+                    type: boolean
+        ImportAccountReq:
+            type: object
+            properties:
+                source:
+                    type: string
+                uid:
+                    type: string
+        Info:
+            type: object
+            properties:
+                id:
+                    type: string
+                name:
+                    type: string
+                callbackUrl:
+                    type: string
+                keyValidityPeriod:
+                    type: integer
+                    format: uint64
+                autoLogin:
+                    type: boolean
+                secret:
+                    type: string
+                devMode:
+                    type: boolean
+        InfoRequest:
+            type: object
+            properties:
+                id:
+                    type: string
+        NameReply:
+            type: object
+            properties:
+                name:
+                    type: string
+        ResetPwdReq:
+            type: object
+            properties:
+                oldPwd:
+                    type: string
+                newPwd:
+                    type: string
+                verifyPwd:
+                    type: string
+        ResultReply:
+            type: object
+            properties:
+                result:
+                    type: boolean
+        SaveRelationReq:
+            type: object
+            properties:
+                uid:
+                    type: string
+                identSource:
+                    type: string
+                identId:
+                    type: string
+        SearchUidReply:
+            type: object
+            properties:
+                sub:
+                    $ref: '#/components/schemas/Subject'
+        SearchUidReq:
+            type: object
+            properties:
+                uid:
+                    type: string
+        StandardizeAccountReq:
+            type: object
+            properties:
+                source:
+                    type: string
+                id:
+                    type: string
+        Status:
+            type: object
+            properties:
+                code:
+                    type: integer
+                    description: The status code, which should be an enum value of [google.rpc.Code][google.rpc.Code].
+                    format: int32
+                message:
+                    type: string
+                    description: A developer-facing error message, which should be in English. Any user-facing error message should be localized and sent in the [google.rpc.Status.details][google.rpc.Status.details] field, or localized by the client.
+                details:
+                    type: array
+                    items:
+                        $ref: '#/components/schemas/GoogleProtobufAny'
+                    description: A list of messages that carry the error details.  There is a common set of message types for APIs to use.
+            description: 'The `Status` type defines a logical error model that is suitable for different programming environments, including REST APIs and RPC APIs. It is used by [gRPC](https://github.com/grpc). Each `Status` message contains three pieces of data: error code, error message, and error details. You can find out more about this error model and how to work with it in the [API Design Guide](https://cloud.google.com/apis/design/errors).'
+        Subject:
+            type: object
+            properties:
+                uid:
+                    type: string
+                displayName:
+                    type: string
+                email:
+                    type: string
+                phoneNo:
+                    type: string
+                source:
+                    type: string
+                app:
+                    type: string
+                retired:
+                    type: boolean
+                gender:
+                    type: string
+        TokenAuthReply:
+            type: object
+            properties:
+                sub:
+                    $ref: '#/components/schemas/Subject'
+                uid:
+                    type: string
+        TokenAuthReq:
+            type: object
+            properties:
+                token:
+                    type: string
+        TokenInfoReply:
+            type: object
+            properties:
+                uid:
+                    type: string
+                displayName:
+                    type: string
+                email:
+                    type: string
+                phoneNo:
+                    type: string
+                retired:
+                    type: boolean
+                gender:
+                    type: string
+        TokenRequest:
+            type: object
+            properties:
+                token:
+                    type: string
+                app:
+                    type: string
+tags:
+    - name: Account
+    - name: Authorization
+    - name: Identification
+    - name: OpenIDProvider
+    - name: ThirdParty

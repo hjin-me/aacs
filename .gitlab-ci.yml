@@ -1,0 +1,3 @@
+include:
+  project: 'huangjin/ci'
+  file: 'go/.gitlab-ci.yml'
