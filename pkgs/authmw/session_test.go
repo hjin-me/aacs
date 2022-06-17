@@ -4,6 +4,7 @@ import (
 	"context"
 	"testing"
 
+	"github.com/lunzi/aacs/internal/server/middlewares"
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/require"
 )
@@ -21,4 +22,21 @@ func TestSession(t *testing.T) {
 	require.Panics(t, func() {
 		Session(nil, "", nil)
 	})
+}
+
+func TestContext(t *testing.T) {
+	ctx := context.Background()
+	ctx = ContextWithClientInfo(ctx, middlewares.ClientInfo{
+		AppId: "appId",
+		UID:   "uid",
+		Token: "token",
+	})
+
+	ci, ok := ClientInfoFromContext(ctx)
+	require.True(t, ok)
+	assert.EqualValues(t, middlewares.ClientInfo{
+		AppId: "appId",
+		UID:   "uid",
+		Token: "token",
+	}, ci)
 }

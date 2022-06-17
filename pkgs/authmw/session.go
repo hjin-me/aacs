@@ -16,3 +16,6 @@ func Session(rpc v1.IdentificationClient, appId authutils.AppId, logger log.Logg
 var GetSession = middlewares.GetSession
 var GetUID = middlewares.GetUID
 var GetToken = middlewares.GetToken
+
+var ClientInfoFromContext = middlewares.FromContext
+var ContextWithClientInfo = middlewares.NewContext

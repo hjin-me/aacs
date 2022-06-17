@@ -47,13 +47,14 @@ require (
 )
 
 require (
-	github.com/BurntSushi/toml v0.3.1 // indirect
+	github.com/BurntSushi/toml v1.1.0 // indirect
 	github.com/CloudyKit/fastprinter v0.0.0-20200109182630-33d98a066a53 // indirect
-	github.com/CloudyKit/jet/v3 v3.0.0 // indirect
+	github.com/CloudyKit/jet/v3 v3.0.1 // indirect
 	github.com/Knetic/govaluate v3.0.1-0.20171022003610-9aa49832a739+incompatible // indirect
-	github.com/Shopify/goreferrer v0.0.0-20181106222321-ec9c9a553398 // indirect
+	github.com/Shopify/goreferrer v0.0.0-20210630161223-536fa16abd6f // indirect
 	github.com/ajg/form v1.5.1 // indirect
 	github.com/andybalholm/brotli v1.0.4 // indirect
+	github.com/aymerick/douceur v0.2.0 // indirect
 	github.com/aymerick/raymond v2.0.3-0.20180322193309-b565731e1464+incompatible // indirect
 	github.com/beorn7/perks v1.0.1 // indirect
 	github.com/boombuler/barcode v1.0.1-0.20190219062509-6c824513bacc // indirect
@@ -78,6 +79,7 @@ require (
 	github.com/golang/glog v1.0.0 // indirect
 	github.com/golang/protobuf v1.5.2 // indirect
 	github.com/google/go-querystring v1.1.0 // indirect
+	github.com/gorilla/css v1.0.0 // indirect
 	github.com/gorilla/mux v1.8.0 // indirect
 	github.com/gorilla/websocket v1.4.2 // indirect
 	github.com/grpc-ecosystem/grpc-gateway/v2 v2.10.0 // indirect
@@ -85,21 +87,21 @@ require (
 	github.com/imdario/mergo v0.3.12 // indirect
 	github.com/imkira/go-interpol v1.1.0 // indirect
 	github.com/iris-contrib/blackfriday v2.0.0+incompatible // indirect
-	github.com/iris-contrib/jade v1.1.3 // indirect
+	github.com/iris-contrib/jade v1.1.4 // indirect
 	github.com/iris-contrib/pongo2 v0.0.1 // indirect
-	github.com/iris-contrib/schema v0.0.1 // indirect
+	github.com/iris-contrib/schema v0.0.6 // indirect
 	github.com/jinzhu/inflection v1.0.0 // indirect
 	github.com/json-iterator/go v1.1.12 // indirect
-	github.com/kataras/golog v0.0.10 // indirect
-	github.com/kataras/pio v0.0.2 // indirect
+	github.com/kataras/golog v0.1.7 // indirect
+	github.com/kataras/pio v0.0.10 // indirect
 	github.com/kataras/sitemap v0.0.5 // indirect
-	github.com/klauspost/compress v1.15.0 // indirect
+	github.com/klauspost/compress v1.15.6 // indirect
 	github.com/kr/pretty v0.3.0 // indirect
 	github.com/magiconair/properties v1.8.5 // indirect
 	github.com/mattn/go-colorable v0.1.12 // indirect
 	github.com/mattn/go-isatty v0.0.14 // indirect
 	github.com/matttproud/golang_protobuf_extensions v1.0.1 // indirect
-	github.com/microcosm-cc/bluemonday v1.0.2 // indirect
+	github.com/microcosm-cc/bluemonday v1.0.18 // indirect
 	github.com/mitchellh/mapstructure v1.4.3 // indirect
 	github.com/modern-go/concurrent v0.0.0-20180306012644-bacd9c7ef1dd // indirect
 	github.com/modern-go/reflect2 v1.0.2 // indirect
@@ -111,7 +113,7 @@ require (
 	github.com/prometheus/procfs v0.7.3 // indirect
 	github.com/rakyll/statik v0.1.7 // indirect
 	github.com/rogpeppe/go-internal v1.8.0 // indirect
-	github.com/ryanuber/columnize v2.1.0+incompatible // indirect
+	github.com/ryanuber/columnize v2.1.2+incompatible // indirect
 	github.com/schollz/closestmatch v2.1.0+incompatible // indirect
 	github.com/sergi/go-diff v1.2.0 // indirect
 	github.com/shurcooL/sanitized_anchor_name v1.0.0 // indirect
@@ -138,14 +140,14 @@ require (
 	github.com/yudai/pp v2.0.1+incompatible // indirect
 	go.opentelemetry.io/otel/exporters/otlp/internal/retry v1.6.3 // indirect
 	go.opentelemetry.io/proto/otlp v0.15.0 // indirect
-	golang.org/x/crypto v0.0.0-20220411220226-7b82a4e95df4 // indirect
-	golang.org/x/net v0.0.0-20220418201149-a630d4f3e7a2 // indirect
+	golang.org/x/crypto v0.0.0-20220525230936-793ad666bf5e // indirect
+	golang.org/x/net v0.0.0-20220615171555-694bf12d69de // indirect
 	golang.org/x/sync v0.0.0-20210220032951-036812b2e83c // indirect
-	golang.org/x/sys v0.0.0-20220422013727-9388b58f7150 // indirect
+	golang.org/x/sys v0.0.0-20220615213510-4f61da869c0c // indirect
 	golang.org/x/text v0.3.7 // indirect
 	gopkg.in/check.v1 v1.0.0-20201130134442-10cb98267c6c // indirect
-	gopkg.in/ini.v1 v1.66.3 // indirect
+	gopkg.in/ini.v1 v1.66.6 // indirect
 	gopkg.in/yaml.v2 v2.4.0 // indirect
-	gopkg.in/yaml.v3 v3.0.0-20210107192922-496545a6307b // indirect
+	gopkg.in/yaml.v3 v3.0.1 // indirect
 	mellium.im/sasl v0.2.1 // indirect
 )
