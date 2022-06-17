@@ -41,11 +41,45 @@ permissions:
 jobs:
   Analysis:
     runs-on: ubuntu-latest
-    
+    container: golang:1.17
+    # Service containers to run with `container-job`
+    services:
+      # Label used to access the service container
+      postgres:
+        # Docker Hub image
+        image: postgres
+        # Provide the password for postgres
+        env:
+          POSTGRES_USER: root
+          POSTGRES_PASSWORD: 654321
+          POSTGRES_DB: test
+          POSTGRES_HOST_AUTH_METHOD: trust
+        # Set health checks to wait until postgres has started
+        options: >-
+          --health-cmd pg_isready
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+      redis:
+        # Docker Hub image
+        image: redis
+        # Set health checks to wait until redis has started
+        options: >-
+          --health-cmd "redis-cli ping"
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
     steps:
       - uses: actions/checkout@v2
         with:
           fetch-depth: 0  # Shallow clones should be disabled for a better relevancy of analysis
+      - name: GoTest
+        run: go test -v -coverpkg=./... -covermode=count -timeout=90s -coverprofile=_coverage.out ./...
+        env:
+          DB_DSN: postgresql://root:654321@postgres:5432/test?sslmode=disable
+          LDAP_HOST: openldap:1389
+          HTTP_PORT: 8080
+          REDIS_DSN: redis://redis:6379/0
       - name: Analyze with SonarCloud         
 
         # You can pin the exact commit or the version.
@@ -61,3 +95,6 @@ jobs:
             # mandatory
             -Dsonar.projectKey=lunzi_aacs
             -Dsonar.organization=lunzi
+            -Dsonar.exclusions=_*/**,**/*_test.go,**/*.pb.validate.go,**/*.pb.go,***/*_mock.go,***/*_gen.go,env/**,vendor/**,**/*.yaml,**/*.yml,internal/assets/statics/thirdparty/**
+            -Dsonar.go.golangci-lint.reportPaths=_report.xml
+            -Dsonar.go.coverage.reportPaths=_coverage.out
