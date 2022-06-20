@@ -19,3 +19,5 @@ var GetToken = middlewares.GetToken
 
 var ClientInfoFromContext = middlewares.FromContext
 var ContextWithClientInfo = middlewares.NewContext
+
+type ClientInfo = middlewares.ClientInfo
