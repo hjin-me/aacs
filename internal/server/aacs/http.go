@@ -34,6 +34,7 @@ func NewHTTPServer(c *conf.Server, identServ *service.IdentificationService,
 	accountServ *service.AccountService,
 	ident biz.IdentRepo,
 	accRepo biz.AccountsRepo,
+	tpRepo biz.ThirdPartyRepo,
 	logger log.Logger) *http.Server {
 	var opts = []http.ServerOption{
 		http.Middleware(
@@ -67,7 +68,7 @@ func NewHTTPServer(c *conf.Server, identServ *service.IdentificationService,
 	srv.HandlePrefix("/statics/", assets.StaticsServer(c.GetPageDebug()))
 
 	pages.BindServ(srv, c.RootAppId)
-	middlewares.NewAuthCallbackServ(srv, accRepo, ident, "/callback", "/debug", pages.ErrPage, log.NewHelper(logger))
+	middlewares.NewV1InternalRedirect(srv, accRepo, ident, tpRepo, pages.ErrPage)
 
 	v12.RegisterIdentificationHTTPServer(srv, identServ)
 	v1.RegisterThirdPartyHTTPServer(srv, tp)

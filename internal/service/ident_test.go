@@ -2,6 +2,7 @@ package service
 
 import (
 	"context"
+	"net/url"
 	"os"
 	"testing"
 	"time"
@@ -127,6 +128,14 @@ func TestNewIdentificationService(t *testing.T) {
 		assert.Empty(t, et.Gender)
 		assert.Equal(t, "dn", et.DisplayName)
 	})
+}
+func TestRedirectUrl(t *testing.T) {
+	u, err := url.Parse("/internal/redirect")
+	require.NoError(t, err)
+	values := u.Query()
+	values.Set("token", "123#$%&**zxcvas-_")
+	u.RawQuery = values.Encode()
+	assert.Equal(t, "/internal/redirect?token=123%23%24%25%26%2A%2Azxcvas-_", u.String())
 }
 func defaultDBConf() *redis.Options {
 
