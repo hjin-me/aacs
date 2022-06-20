@@ -2,6 +2,8 @@ package service
 
 import (
 	"context"
+	"net/url"
+	"strconv"
 
 	"github.com/go-kratos/kratos/v2/log"
 	"github.com/lunzi/aacs/api/apierr"
@@ -9,6 +11,7 @@ import (
 	"github.com/lunzi/aacs/internal/biz"
 	"github.com/lunzi/aacs/internal/data/pfsession"
 	"github.com/lunzi/aacs/internal/server/middlewares"
+	"github.com/pkg/errors"
 	"google.golang.org/protobuf/types/known/emptypb"
 	"google.golang.org/protobuf/types/known/timestamppb"
 )
@@ -30,7 +33,7 @@ func NewIdentificationService(ident biz.IdentRepo, tp biz.ThirdPartyRepo, p *pfs
 
 func (s *IdentificationService) Basic(ctx context.Context, req *v1.BasicRequest) (*v1.AuthReply, error) {
 	// 验证应用权限
-	appInfo, err := s.thirdParty.GetInfo(ctx, req.GetApp())
+	_, err := s.thirdParty.GetInfo(ctx, req.GetApp())
 	if err != nil {
 		return nil, apierr.ErrorAppInvalid("app[%s] validate failed, %s", req.GetApp(), err.Error())
 	}
@@ -43,20 +46,27 @@ func (s *IdentificationService) Basic(ctx context.Context, req *v1.BasicRequest)
 	if err != nil {
 		return nil, apierr.ErrorWtf("生成Token失败, %s", err.Error())
 	}
-	u, err := appInfo.BuildCallback(expired, token)
-	if err != nil {
-		return nil, apierr.ErrorWtf("第三方应用配置有误, %s", err.Error())
-	}
+	//u, err := appInfo.BuildCallback(expired, token)
+	//if err != nil {
+	//	return nil, apierr.ErrorWtf("第三方应用配置有误, %s", err.Error())
+	//}
 	err = s.p.SetSession(ctx, sub.UID)
 	if err != nil {
 		return nil, apierr.ErrorWtf("写入安天通用账号失败, %s", err.Error())
 	}
-
+	u, err := url.Parse("/v1/internal/redirect")
+	if err != nil {
+		return nil, errors.WithMessage(err, "第三方应用回调地址配置有误")
+	}
+	values := u.Query()
+	values.Set(biz.NameTk, token)
+	values.Set(biz.NameExpiredAt, strconv.FormatInt(expired.Unix(), 10))
+	u.RawQuery = values.Encode()
 	// 返回 access token 和第三方应用的回调页面
 	return &v1.AuthReply{
 		Token:       token,
 		ExpiredAt:   timestamppb.New(expired),
-		CallbackUrl: u,
+		CallbackUrl: u.String(),
 	}, nil
 }
 

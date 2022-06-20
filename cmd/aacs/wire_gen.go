@@ -56,7 +56,7 @@ func initApp(contextContext context.Context, server *conf.Server, data *conf.Dat
 	pageServ := pages.NewPageServ(thirdPartyRepo, identRepo, server, weCom, logger)
 	authorizationService := auth.NewAuthorizationService(logger, authRepo)
 	accountService := service.NewAccountService(logger, providerIns, identRepo, authRepo, accountsRepo, server)
-	httpServer := aacs.NewHTTPServer(server, identificationService, thirdpartyService, pageServ, authorizationService, accountService, identRepo, accountsRepo, logger)
+	httpServer := aacs.NewHTTPServer(server, identificationService, thirdpartyService, pageServ, authorizationService, accountService, identRepo, accountsRepo, thirdPartyRepo, logger)
 	grpcServer := aacs.NewGRPCServer(server, identificationService, authorizationService, thirdpartyService, accountService, identRepo, thirdPartyRepo, logger)
 	app := newApp(logger, httpServer, grpcServer)
 	return app, func() {
