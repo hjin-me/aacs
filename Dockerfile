@@ -21,4 +21,4 @@ EXPOSE 8000
 EXPOSE 9000
 VOLUME /data/conf
 ENTRYPOINT ["aacs"]
-CMD ["-conf", "/data/conf"]
+CMD ["-conf", "/data/conf/config.yaml"]
