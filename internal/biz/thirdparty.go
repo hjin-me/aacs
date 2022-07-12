@@ -25,7 +25,13 @@ type ThirdPartyInfo struct {
 }
 
 func (t ThirdPartyInfo) BuildCallback(expiredAt time.Time, token string) (string, error) {
-	u, err := url.Parse(t.CallbackUrl)
+	var u *url.URL
+	var err error
+	if t.DevMode {
+		u, err = url.Parse("/dev/callback")
+	} else {
+		u, err = url.Parse(t.CallbackUrl)
+	}
 	if err != nil {
 		return "", errors.WithMessage(err, "第三方应用回调地址配置有误")
 	}

@@ -73,7 +73,6 @@ func NewV1InternalRedirect(srv *http.Server, sur biz.SaveAccountRepo, ident biz.
 		}
 		ctx.Response().Header().Add("Set-Cookie", c.String())
 		rawHttp.Redirect(ctx.Response(), ctx.Request(), callbackUrl, 302)
-		_ = callbackUrl
 
 		return nil
 	})

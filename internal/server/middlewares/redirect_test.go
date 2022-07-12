@@ -69,4 +69,57 @@ func TestNewV1InternalRedirect(t *testing.T) {
 		result.Header("Set-Cookie").Contains("token=newtoken")
 
 	})
+	t.Run("dev_mode", func(t *testing.T) {
+		ctl := gomock.NewController(t)
+		surRepo := biztest.NewMockSaveAccountRepo(ctl)
+		identRepo := biztest.NewMockIdentRepo(ctl)
+		tpRepo := biztest.NewMockThirdPartyRepo(ctl)
+		fn := func(w rawHttp.ResponseWriter, r *rawHttp.Request) {
+			_ = json.NewEncoder(w).Encode(testData{Path: r.RequestURI})
+		}
+
+		srv, expect := servtest.NewHttpTestServer(t)
+		srv.HandleFunc("/index", fn)
+		srv.HandleFunc("/debug", func(w rawHttp.ResponseWriter, r *rawHttp.Request) {
+			_ = json.NewEncoder(w).Encode(testData{Path: r.RequestURI})
+		})
+		NewV1InternalRedirect(srv, surRepo, identRepo, tpRepo, func(c http.Context, err error) error {
+			return c.JSON(200, testData{Path: "失败了"})
+		})
+
+		token := "this is token"
+		identRepo.EXPECT().VerifyToken(gomock.Any(), token).Return(biz.Sub{
+			UID:         "thisisuid",
+			DisplayName: "",
+			Email:       "",
+			PhoneNo:     "",
+			Source:      "",
+			App:         "bbcs",
+			Retired:     false,
+		}, nil)
+		identRepo.EXPECT().GrantToken(gomock.Any(), "aacs", "thisisuid").Return(
+			"newtoken", time.Now().Add(10*time.Minute), nil)
+		surRepo.EXPECT().Save(gomock.Any(), gomock.Any()).Return(nil)
+		tpRepo.EXPECT().GetInfo(gomock.Any(), "bbcs").Return(biz.ThirdPartyInfo{
+			Id:                "bbcs",
+			Name:              "",
+			SecretKey:         "123123123",
+			CallbackUrl:       "/debug",
+			KeyValidityPeriod: 3600,
+			AutoLogin:         false,
+			DevMode:           true, // TEST this
+		}, nil)
+
+		result := expect.GET("/v1/internal/redirect").
+			WithRedirectPolicy(httpexpect.DontFollowRedirects).
+			WithQuery(NameTk, token).
+			WithQuery(NameExpiredAt, time.Now().Add(time.Hour).Unix()).
+			Expect()
+		result.Status(rawHttp.StatusFound)
+		result.Body().Contains("/dev/callback?x-aacs-expired-at=")
+		result.Header("Location").Contains("/dev/callback?x-aacs-expired-at=").Contains("x-aacs-token=this+is+token")
+		result.Headers().ContainsKey("Location").ContainsKey("Set-Cookie")
+		result.Header("Set-Cookie").Contains("token=newtoken")
+
+	})
 }

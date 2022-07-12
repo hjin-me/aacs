@@ -27,7 +27,7 @@ func DevPage(ident biz.IdentRepo, tpRepo biz.ThirdPartyRepo) PageHandler {
 		if !appInfo.DevMode {
 			return errors.New("非开发模式")
 		}
-		return Render(ctx, "dev", w, nil)
+		return Render(ctx, "dev", w, appInfo)
 
 	}
 }
