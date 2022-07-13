@@ -39,8 +39,9 @@ func DevPage(ident biz.IdentRepo, tpRepo biz.ThirdPartyRepo) PageHandler {
 		u.RawQuery = values.Encode()
 
 		return Render(ctx, "dev", w, struct {
-			CallbackUrl string `json:"callbackUrl"`
-		}{CallbackUrl: u.String()})
+			CallbackUrl     string `json:"callbackUrl"`
+			CallbackDisplay string `json:"callbackDisplay"`
+		}{CallbackUrl: u.String(), CallbackDisplay: appInfo.CallbackUrl})
 
 	}
 }

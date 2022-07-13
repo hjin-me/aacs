@@ -5,19 +5,24 @@
     {{template "nav" .}}
     <div class="container" x-data="  {
     u: '',
-    lastUrl: '',
+    lastUrls: [],
     init() {
-      this.lastUrl = localStorage.getItem('lastCallback')
+      try {
+        this.lastUrls = JSON.parse(localStorage.getItem('lastCallback')) || [];
+      } catch (e) {
+      }
     },
-    go() {
-      localStorage.setItem('lastCallback', this.u)
-      location.href = this.u + location.search
+    go(u) {
+      this.lastUrls = this.lastUrls.filter((v, i) => i < 9 && u !== v)
+      this.lastUrls.unshift(u)
+      localStorage.setItem('lastCallback', JSON.stringify(this.lastUrls))
+      location.href = u + location.search
     }
   }" x-init="init()">
         <div class="row mb-3 mt-3">
             <div class="col">
                 <span>默认访问地址，不知道这个页面该填啥的同学点这里 -></span>
-                <a href="{{.CallbackUrl}}" class="btn btn-link">{{.CallbackUrl}}</a>
+                <a href="{{.CallbackUrl}}" class="btn btn-link">{{.CallbackDisplay}}</a>
             </div>
         </div>
         <hr>
@@ -28,14 +33,17 @@
                        name="url" tabindex="1" placeholder="自定义跳转地址（开发调试用）" x-model="u">
             </div>
             <div class="col">
-                <button type="submit" class="btn btn-primary" x-on:click="go()">Go</button>
+                <button type="submit" class="btn btn-primary" x-on:click="go(u)">Go</button>
             </div>
         </div>
         <h4>历史访问记录</h4>
-        <div class="row mb-3" x-show="lastUrl">
-            <div class="col">
-                <a x-bind:href="lastUrl" class="btn btn-link" x-text="lastUrl"></a>
-            </div>
+        <div class="row mb-3" x-show="lastUrls.length">
+            <template x-for="u in lastUrls">
+                <div class="col">
+                    <button class="btn btn-link" x-text="u" x-on:click="go(u)"></button>
+                </div>
+            </template>
+
         </div>
     </div>
 {{end}}
