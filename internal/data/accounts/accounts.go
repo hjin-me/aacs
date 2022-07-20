@@ -27,6 +27,9 @@ type accountsRepo struct {
 }
 
 func (a *accountsRepo) Add(ctx context.Context, sub biz.Account, ignoreConflict bool) error {
+	if sub.Id == "" {
+		return errors.Errorf("添加用户时，用户ID不能为空")
+	}
 	// 同步至本地数据库
 	u := dbmodel.Account{
 		ID:          sub.Id,
