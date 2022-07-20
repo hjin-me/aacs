@@ -216,6 +216,9 @@ func (i *identRepo) ParseUID(ctx context.Context, uid string) (ns, id string, er
 	return i.opSet.ParseUID(ctx, uid)
 }
 func (i *identRepo) SaveRelation(ctx context.Context, uId, identId, identSource string) error {
+	if uId == "" || identId == "" || identSource == "" {
+		return errors.Errorf("关系表信息不完整, unityId: `%s`, identId: `%s`, identSource: `%s`", uId, identId, identSource)
+	}
 	ok, err := i.db.NewSelect().Model(&dbmodel.Resource{}).Where("name=?", identSource).Exists(ctx)
 	if err != nil {
 		return errors.WithMessage(err, "插入账户关系操作失败")

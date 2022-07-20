@@ -30,6 +30,10 @@ func TestNewAccountsRepo(t *testing.T) {
 		ctl := gomock.NewController(t)
 		opSet := biztest.NewMockOpenIDSet(ctl)
 		repo := NewAccountsRepo(db, opSet)
+
+		s, err := repo.GetByID(ctx, "")
+		require.Error(t, err)
+
 		err = repo.Add(ctx, biz.Account{
 			Id:          "aaaa",
 			DisplayName: "bbbb",
@@ -44,7 +48,7 @@ func TestNewAccountsRepo(t *testing.T) {
 			PhoneNo:     "dn",
 		}, true)
 		require.NoError(t, err)
-		s, err := repo.GetByID(ctx, "aaaa")
+		s, err = repo.GetByID(ctx, "aaaa")
 		require.NoError(t, err)
 		assert.Equal(t, "dn", s.DisplayName)
 		assert.Equal(t, "xxx", s.RelatedIdents[0].Id)

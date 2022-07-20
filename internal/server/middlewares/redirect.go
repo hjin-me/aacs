@@ -38,11 +38,11 @@ func NewV1InternalRedirect(srv *http.Server, sur biz.SaveAccountRepo, ident biz.
 		if err != nil {
 			return errorHandler(ctx, errors.New("url参数过期日期不正确"))
 		}
-		sub, err := ident.VerifyToken(ctx.Request().Context(), token)
+		sub, err := ident.VerifyToken(ctx, token)
 		if err != nil {
 			return errorHandler(ctx, errors.New("无效的token"))
 		}
-		err = sur.Save(ctx.Request().Context(), biz.Account{
+		err = sur.Save(ctx, biz.Account{
 			Id:          sub.UID,
 			DisplayName: sub.DisplayName,
 			Email:       sub.Email,

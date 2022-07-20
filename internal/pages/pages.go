@@ -1,10 +1,6 @@
 package pages
 
 import (
-	"context"
-	rawHttp "net/http"
-	"time"
-
 	"github.com/go-kratos/kratos/v2/log"
 	"github.com/go-kratos/kratos/v2/transport/http"
 	"github.com/lunzi/aacs/internal/biz"
@@ -25,17 +21,7 @@ func (s *PageServ) BindServ(srv *http.Server, rootAppId string) {
 	r.GET("/", s.p.WrapHandler(PageLogin(s.tpRepo, s.identRepo, rootAppId, s.wc, s.logger)))
 	r.GET("/debug", s.p.WrapHandler(HomePage))
 	r.GET("/wecom-login", s.p.WrapHandler(PageWecomLogin(s.tpRepo, s.identRepo, s.logger)))
-	r.GET("/logout", s.p.WrapHandler(func(ctx context.Context, r *rawHttp.Request, w rawHttp.ResponseWriter) (err error) {
-		c := &rawHttp.Cookie{
-			Name:    "x-aacs-token",
-			Value:   "",
-			Expires: time.Now().Add(-10000 * time.Second),
-		}
-		w.Header().Set("Set-Cookie", c.String())
-		u := r.Header.Get("Referer")
-		rawHttp.Redirect(w, r, u, rawHttp.StatusFound)
-		return nil
-	}))
+	r.GET("/logout", s.p.WrapHandler(LogoutGet(s.tpRepo)))
 	r.GET("/m/thirdparty", s.p.WrapHandler(ManagerPage))
 	r.GET("/m/accounts", s.p.WrapHandler(AccountsLogin(s.tpRepo, s.identRepo, rootAppId, s.logger)))
 
